@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html>
+<body>
+    <h1> Your Sorted Tasks </h1>
+    <table>
+        <tr>
+            <td> <h3> Task Description </h3></td>
+            <td> <h3> Priority </h3></td>
+        </tr>
+        {% for t in tasks %}
+        <tr>
+            <td>
+                <h3>
+                    {{t.task_name}}
+                </h3>
+            </td>
+            <td>
+                <h3>
+                    {{t.priority}}
+                </h3>
+            </td>
+            <td>
+                <form method="post" action="{{url_for('delete_task',id= t.task_id)}}">
+                    <button type="submit"> Delete Task </button>
+                </form>
+            </td>
+            <td>
+                <a href="{{url_for('update_task',id=t.task_id)}}"> Update Task </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/logout"> Logout </a> <br />
+    <a href="/tasklist"> Task List </a>
+</body>
+</html>
