@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <h2> Your Assignments </h2>
+    <table>
+        {% for a in assignment %}
+        <tr>
+            <td>
+                <h3>
+                    {{a.course_name}}
+                </h3>
+            </td>
+            <td>
+                <h3>
+                    {{a.task_name}}
+                </h3>
+            </td>
+            {% if session['TYPE'] == 'professor' %}
+            <td>
+                <form method="post" action="{{url_for('delete_task2',id= a.task_id)}}">
+                    <button type="submit"> Delete Task </button>
+                </form>
+            </td>
+            <td>
+                <a href="{{url_for('update_task2',id=a.task_id)}}"> Update Task </a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% if session['TYPE'] == 'professor' %}
+    <h2> Add Assignments </h2>
+    <form action="" method="post" novalidate>
+        {{form.hidden_tag()}}
+        <p>
+            {{form.course_number.label}}<br />
+            {{form.course_number(size=32)}}<br />
+            {% for error in form.course_number.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.description.label}}<br />
+            {{form.description(size=32)}}<br />
+            {% for error in form.description.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.submit()}}
+        </p>
+    </form>
+    {% endif %}
+    <h2> Add Courses </h2>
+    <form action="" method="post" novalidate>
+        {{form_2.hidden_tag()}}
+        <p>
+            {{form_2.course_number.label}}<br />
+            {{form_2.course_number(size=32)}}<br />
+            {% for error in form.course_number.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form_2.course_name.label}}<br />
+            {{form_2.course_name(size=32)}}<br />
+            {% for error in form.description.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form_2.submit()}}
+        </p>
+    </form>
+    <hr />
+    <a href="/logout"> Logout </a> <br />
+    <a href="/tasklist"> Task List </a><br />
+    {% if session['TYPE'] == 'professor'%}
+    <a href="/roster"> Roster </a>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</body>
+</html>

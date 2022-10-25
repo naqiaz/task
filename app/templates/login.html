@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html>
+<h1>Log In</h1>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.type.label }}<br>
+        {{ form.type() }}
+        {% for error in form.type.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}
+        {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+    {% for error in form.submit.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+</form>
+<body>
+    <hr />
+    <a href="/register"> Register </a><br />
+    <a href="/logout"> Logout </a><br />
+    <a href="/tasklist"> Task List </a><br />
+    <a href="/assignmentlist"> Assignment List </a><br />
+    {% if session['TYPE'] == 'professor'%}
+    <a href="/roster"> Roster </a>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</body>
+</html>

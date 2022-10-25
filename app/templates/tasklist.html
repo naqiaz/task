@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<body>
+    <h1> Your Tasks </h1>
+    <table>
+        <tr>
+            <td> <h3> Task Description </h3></td>
+            <td> <h3> Priority </h3></td>
+        </tr>
+        {% for t in tasks %}
+        <tr>
+            <td>
+                <h3>
+                    {{t.task_name}}
+                </h3>
+            </td>
+            <td>
+                <h3>
+                    {{t.priority}}
+                </h3>
+            </td>
+            <td>
+                <form method="post" action="{{url_for('delete_task',id= t.task_id)}}">
+                    <button type="submit"> Delete Task </button>
+                </form>
+            </td>
+            <td>
+                <a href="{{url_for('update_task',id=t.task_id)}}"> Update Task </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="" method="post" novalidate>
+        {{form.hidden_tag()}}
+        <p>
+            {{form.description.label}}<br />
+            {{form.description(size=32)}}<br />
+            {% for error in form.description.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.priority.label}}<br />
+            {{form.priority(size=32)}}<br />
+            {% for error in form.priority.errors %}
+            <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.submit()}}
+        </p>
+    </form>
+    <hr />
+    <a href="/sort_priority"> Sort Priority </a> <br />
+    <a href="/logout"> Logout </a> <br />
+    <a href="/assignmentlist"> Assignment List </a> <br />
+    {% if session['TYPE'] == 'professor' %}
+    <a href="/roster"> Roster </a>
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</body>

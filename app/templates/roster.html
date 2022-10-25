@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<body>
+    <h1> Roster  </h1>
+    <table>
+        {% for r in roster %}
+        <tr>
+            <td>
+                <h3>
+                    {{ r.course_name}}
+                </h3>
+            </td>
+            <td>
+                {% for x in r %}
+                <h3>
+                    {{x.stud_email}} 
+                </h3>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/tasklist"> Task List </a><br />
+    <a href="/assignmentlist"> Assignment List </a>
+</body>
+</html>
